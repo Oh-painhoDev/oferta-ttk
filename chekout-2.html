@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finalizar Compra - OS QUERIDINHOS</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary: #FE2C55; /* Vermelho TikTok */
+            --secondary: #25F4EE; /* Azul TikTok */
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            font-family: 'Roboto', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        .progress-step.active .step-number {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+        
+        .progress-step.active .step-name {
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        .pix-qrcode {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            opacity: 0.9;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        /* Slide animation */
+        .slide-container {
+            display: flex;
+            width: 200%;
+            transition: transform 0.5s ease-in-out;
+        }
+        
+        .slide-page {
+            width: 50%;
+        }
+        
+        .slide-right {
+            transform: translateX(-50%);
+        }
+    </style>
+</head>
+<body class="pb-20">
+    <!-- Header -->
+    <div class="bg-white shadow-sm sticky top-0 z-10">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center">
+                <i class="fas fa-arrow-left text-gray-600 mr-2"></i>
+                <h1 class="text-lg font-bold">Finalizar Compra</h1>
+            </div>
+        </div>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="bg-white py-4 px-4 shadow-sm">
+        <div class="flex justify-between relative max-w-md mx-auto">
+            <div class="absolute top-3 left-0 right-0 h-1 bg-gray-200 z-0">
+                <div id="progress-bar" class="h-full bg-gradient-to-r from-rose-500 to-cyan-400" style="width: 50%;"></div>
+            </div>
+            
+            <div class="progress-step active z-10 flex flex-col items-center">
+                <div class="step-number w-8 h-8 rounded-full border-2 border-gray-300 bg-white flex items-center justify-center font-bold mb-1">1</div>
+                <div class="step-name text-xs text-gray-600">Informações</div>
+            </div>
+            
+            <div class="progress-step z-10 flex flex-col items-center">
+                <div class="step-number w-8 h-8 rounded-full border-2 border-gray-300 bg-white flex items-center justify-center font-bold mb-1">2</div>
+                <div class="step-name text-xs text-gray-600">Pagamento</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide Container -->
+    <div class="slide-container">
+        <!-- Page 1 - Informações -->
+        <div class="slide-page px-4">
+            <!-- Product Summary -->
+            <div class="bg-white mt-2 p-4 rounded-lg shadow">
+                <h2 class="font-bold text-gray-800 mb-3">Seu Pedido</h2>
+                
+                <div class="flex border-b pb-3">
+                    <div class="w-16 h-16 bg-gray-100 rounded-md overflow-hidden">
+                        <img src="uploads/6882ffbbbe841_03.png" alt="Produto" class="w-full h-full object-cover">
+                    </div>
+                    <div class="ml-3 flex-1">
+                        <h3 class="text-sm font-medium text-gray-800">OS QUERIDINHOS - COMBO GLOSS LICIOUS</h3>
+                        <p class="text-xs text-gray-500">Variação: LOVE KIT - GLOSS-LICIOUS</p>
+                        <p class="text-sm font-bold text-rose-600 mt-1">R$ 43,91</p>
+                    </div>
+                    <div class="text-gray-500 text-sm">Qtd: 1</div>
+                </div>
+                
+                <div class="pt-3">
+                    <div class="flex justify-between text-sm py-1">
+                        <span class="text-gray-600">Subtotal</span>
+                        <span class="font-medium">R$ 43,91</span>
+                    </div>
+                    <div class="flex justify-between text-sm py-1">
+                        <span class="text-gray-600">Frete</span>
+                        <span class="font-medium text-green-600">Grátis</span>
+                    </div>
+                    <div class="flex justify-between text-sm py-1">
+                        <span class="text-gray-600">Taxas</span>
+                        <span class="font-medium">R$ 2,10</span>
+                    </div>
+                    <div class="flex justify-between text-base font-bold pt-2 mt-2 border-t">
+                        <span>Total</span>
+                        <span class="text-rose-600">R$ 46,01</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Form -->
+            <div class="bg-white mt-3 p-4 rounded-lg shadow">
+                <h2 class="font-bold text-gray-800 mb-3">Informações Pessoais</h2>
+                
+                <form id="payment-form">
+                    <div class="mb-3">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Nome Completo</label>
+                        <input type="text" id="name" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">E-mail</label>
+                        <input type="email" id="email" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">CPF</label>
+                        <input type="text" id="document" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent" placeholder="000.000.000-00">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Telefone</label>
+                        <input type="tel" id="phone" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent" placeholder="(00) 00000-0000">
+                    </div>
+                    
+                    <button type="submit" class="btn-primary w-full py-3 rounded-md font-bold mt-6 flex items-center justify-center">
+                        <i class="fas fa-lock mr-2"></i> Continuar para Pagamento
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Page 2 - Pagamento PIX -->
+        <div class="slide-page px-4" style="display: none;">
+            <div class="bg-white mt-2 p-4 rounded-lg shadow">
+                <h2 class="font-bold text-gray-800 mb-3 text-center">Pagamento via PIX</h2>
+                
+                <div class="text-center mb-4">
+                    <p class="text-gray-600">Escaneie o QR Code abaixo para pagar</p>
+                    <div class="pix-qrcode my-4">
+                        <img id="pix-qrcode-image" src="" alt="QR Code PIX" class="w-full h-full">
+                    </div>
+                    <p id="countdown" class="text-sm font-medium text-gray-700 mb-2">Tempo restante: <span class="text-rose-600">15:00</span></p>
+                </div>
+                
+                <div class="bg-gray-50 p-4 rounded-md mb-4">
+                    <h3 class="font-bold text-gray-800 mb-2 text-center">Ou copie o código PIX</h3>
+                    <div id="pix-key" class="bg-white p-3 rounded border border-gray-200 text-sm break-all font-mono mb-2"></div>
+                    <button id="copy-pix" class="w-full py-2 bg-gray-200 text-gray-800 rounded-md font-medium flex items-center justify-center">
+                        <i class="fas fa-copy mr-1"></i> Copiar Código
+                    </button>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <p class="text-xs text-gray-500">Após o pagamento, seu pedido será processado automaticamente.</p>
+                    <p class="text-xs text-gray-500 mt-1">Número do pedido: <span id="order-number-display" class="font-medium"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Máscaras para CPF e telefone
+        function applyMasks() {
+            // Máscara para CPF
+            const cpfInput = document.getElementById('document');
+            cpfInput.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                
+                if (value.length > 3) {
+                    value = value.substring(0, 3) + '.' + value.substring(3);
+                }
+                if (value.length > 7) {
+                    value = value.substring(0, 7) + '.' + value.substring(7);
+                }
+                if (value.length > 11) {
+                    value = value.substring(0, 11) + '-' + value.substring(11, 13);
+                }
+                
+                e.target.value = value.substring(0, 14);
+            });
+            
+            // Máscara para telefone
+            const phoneInput = document.getElementById('phone');
+            phoneInput.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                
+                if (value.length > 0) {
+                    value = '(' + value.substring(0, 2) + ') ' + value.substring(2);
+                }
+                if (value.length > 10) {
+                    value = value.substring(0, 10) + '-' + value.substring(10, 15);
+                }
+                
+                e.target.value = value.substring(0, 15);
+            });
+        }
+        
+        // Contador regressivo
+        function startCountdown() {
+            let totalSeconds = 15 * 60; // 15 minutos em segundos
+            const countdownEl = document.getElementById('countdown');
+            
+            function updateCountdown() {
+                const minutes = Math.floor(totalSeconds / 60);
+                const seconds = totalSeconds % 60;
+                
+                countdownEl.innerHTML = `Tempo restante: <span class="text-rose-600">${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}</span>`;
+                
+                if (totalSeconds <= 0) {
+                    clearInterval(countdownInterval);
+                    countdownEl.innerHTML = "Tempo esgotado! <span class='text-rose-600'>Recarregue a página para gerar um novo QR Code</span>";
+                } else {
+                    totalSeconds--;
+                }
+            }
+            
+            const countdownInterval = setInterval(updateCountdown, 1000);
+            updateCountdown();
+        }
+        
+        // Copiar chave PIX
+        function setupCopyButton() {
+            document.getElementById('copy-pix').addEventListener('click', function() {
+                const pixKey = document.getElementById('pix-key').textContent;
+                navigator.clipboard.writeText(pixKey).then(() => {
+                    this.innerHTML = '<i class="fas fa-check mr-1"></i> Copiado!';
+                    setTimeout(() => {
+                        this.innerHTML = '<i class="fas fa-copy mr-1"></i> Copiar';
+                    }, 2000);
+                });
+            });
+        }
+        
+        // Form submission
+        document.getElementById('payment-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Simular processamento do pagamento via API
+            processPayment();
+        });
+        
+        function processPayment() {
+            const submitBtn = document.querySelector('#payment-form button[type="submit"]');
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Processando...';
+            submitBtn.disabled = true;
+            
+            // Dados do formulário
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                document: document.getElementById('document').value,
+                phone: document.getElementById('phone').value,
+                totalCompra: "46.91"
+            };
+            
+            // Chamada para sua API PHP
+            fetch('chekout-2.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Atualizar informações na página de pagamento
+                    document.getElementById('pix-key').textContent = data.qrcode;
+                    document.getElementById('pix-qrcode-image').src = data.qrcodeImage;
+                    document.getElementById('order-number-display').textContent = data.orderNumber;
+                    
+                    // Atualizar barra de progresso
+                    document.querySelectorAll('.progress-step').forEach(step => step.classList.remove('active'));
+                    document.querySelectorAll('.progress-step')[1].classList.add('active');
+                    document.getElementById('progress-bar').style.width = '100%';
+                    
+                    // Mostrar página de pagamento com efeito de slide
+                    document.querySelector('.slide-container').classList.add('slide-right');
+                    document.querySelectorAll('.slide-page')[1].style.display = 'block';
+                    
+                    // Iniciar contador e botão de copiar
+                    startCountdown();
+                    setupCopyButton();
+                } else {
+                    alert(data.error || "Erro ao processar pagamento");
+                    submitBtn.innerHTML = '<i class="fas fa-lock mr-2"></i> Continuar para Pagamento';
+                    submitBtn.disabled = false;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("Erro na comunicação com o servidor");
+                submitBtn.innerHTML = '<i class="fas fa-lock mr-2"></i> Continuar para Pagamento';
+                submitBtn.disabled = false;
+            });
+        }
+        
+        // Inicializar máscaras quando o DOM estiver carregado
+        document.addEventListener('DOMContentLoaded', applyMasks);
+    </script>
+</body>
+</html>
